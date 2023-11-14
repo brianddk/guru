@@ -27,8 +27,6 @@ PATCHES=(
 src_prepare() {
 	default
 
-	cd ports/unix || die
-
 	# 1) don't die on compiler warning
 	# 2) remove /usr/local prefix references in favour of /usr
 	# 3) enforce our CFLAGS
@@ -37,7 +35,7 @@ src_prepare() {
 		-e 's#\/usr\/local#\/usr#g;' \
 		-e "s#^CFLAGS = \(.*\)#CFLAGS = \1 ${CFLAGS}#g" \
 		-e "s#^LDFLAGS = \(.*\)#LDFLAGS = \1 ${LDFLAGS}#g" \
-		-i Makefile || die "can't patch Makefile"
+		-i mpy-cross/Makefile ports/unix/Makefile || die "can't patch Makefile"
 }
 
 src_compile() {
